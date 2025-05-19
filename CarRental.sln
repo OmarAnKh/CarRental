@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRental", "CarRental\CarRental.csproj", "{DED723EE-32E7-48E6-93C9-E76327FAD9CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRentalDB", "CarRentalDB\CarRentalDB.csproj", "{1E320560-6CD4-440B-8C6F-FE78088DA4BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRentalModels", "CarRentalModels\CarRentalModels.csproj", "{E611DFD7-D259-4D79-A215-F7C24F5F9769}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DED723EE-32E7-48E6-93C9-E76327FAD9CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DED723EE-32E7-48E6-93C9-E76327FAD9CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DED723EE-32E7-48E6-93C9-E76327FAD9CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DED723EE-32E7-48E6-93C9-E76327FAD9CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E320560-6CD4-440B-8C6F-FE78088DA4BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E320560-6CD4-440B-8C6F-FE78088DA4BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E320560-6CD4-440B-8C6F-FE78088DA4BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E320560-6CD4-440B-8C6F-FE78088DA4BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E611DFD7-D259-4D79-A215-F7C24F5F9769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E611DFD7-D259-4D79-A215-F7C24F5F9769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E611DFD7-D259-4D79-A215-F7C24F5F9769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E611DFD7-D259-4D79-A215-F7C24F5F9769}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
