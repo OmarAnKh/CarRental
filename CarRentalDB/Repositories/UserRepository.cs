@@ -58,6 +58,7 @@ public class UserRepository : IUserRepository
     {
         try
         {
+            entity.Password = BCrypt.Net.BCrypt.HashPassword(entity.Password);
             await _carRentalContext.Users.AddAsync(entity);
         }
         catch (Exception e)
@@ -85,5 +86,14 @@ public class UserRepository : IUserRepository
     public async Task SaveChangesAsync()
     {
         await _carRentalContext.SaveChangesAsync();
+    }
+
+    public async Task<User?> ValidateCredentialsAsync(string? email, string? password)
+    {
+        var user = await _carRentalContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+        if (user == null) return null;
+
+        bool passwordMatch = BCrypt.Net.BCrypt.Verify(password, user.Password);
+        return passwordMatch ? user : null;
     }
 }

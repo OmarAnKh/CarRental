@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "QE9BlMImNw8=",
+  "dgSpecHash": "d4r4b7rzR/o=",
   "success": true,
   "projectFilePath": "D:\\VS-20230610T091643Z-001\\VS\\course\\foothill\\ASP.Net\\CarRental\\CarRentalDB\\CarRentalDB.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Omark\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
     "C:\\Users\\Omark\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Omark\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
+    "C:\\Users\\Omark\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Omark\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Omark\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "C:\\Users\\Omark\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.3.3\\microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512",
