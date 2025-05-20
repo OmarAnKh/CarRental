@@ -28,7 +28,7 @@ public class CarRentalContext : DbContext
                 City = "New York",
                 County = "NY",
                 LicenseNumber = "NY123456",
-                Rule = UserRule.Customer
+                Role = UserRole.Customer
             },
             new User
             {
@@ -44,7 +44,7 @@ public class CarRentalContext : DbContext
                 City = "Chicago",
                 County = "IL",
                 LicenseNumber = "IL789456",
-                Rule = UserRule.Customer
+                Role = UserRole.Customer
             },
             new User
             {
@@ -60,7 +60,7 @@ public class CarRentalContext : DbContext
                 City = "Los Angeles",
                 County = "CA",
                 LicenseNumber = "CA456789",
-                Rule = UserRule.Admin
+                Role = UserRole.Admin
             },
             new User
             {
@@ -76,7 +76,7 @@ public class CarRentalContext : DbContext
                 City = "Miami",
                 County = "FL",
                 LicenseNumber = "FL112233",
-                Rule = UserRule.Customer
+                Role = UserRole.Customer
             },
             new User
             {
@@ -92,7 +92,7 @@ public class CarRentalContext : DbContext
                 City = "Phoenix",
                 County = "AZ",
                 LicenseNumber = "AZ778899",
-                Rule = UserRule.Customer
+                Role = UserRole.Customer
             }
         );
 

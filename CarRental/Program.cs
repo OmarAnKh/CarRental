@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 DotNetEnv.Env.Load();
+builder.Services.AddControllers().AddNewtonsoftJson();
+
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Services.AddControllers();
@@ -74,6 +76,13 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("MustBeAnAdmin", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("role", "Admin");
+    });
 var app = builder.Build();
 
 
@@ -85,8 +94,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-// app.UseAuthentication();
-// app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();

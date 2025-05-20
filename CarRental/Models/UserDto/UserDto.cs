@@ -16,6 +16,6 @@ public class UserDto
     public string City { get; set; }
     public string County { get; set; }
     public string LicenseNumber { get; set; }
-    public UserRule Rule { get; set; } = UserRule.Customer;
+    public UserRole Role { get; set; } = UserRole.Customer;
 
 }

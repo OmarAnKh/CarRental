@@ -40,11 +40,12 @@ public class RentRepository : IRentRepository
             throw;
         }
     }
-    public async Task AddAsync(Rent entity)
+    public async Task<bool> AddAsync(Rent entity)
     {
         try
         {
             await _context.Rents.AddAsync(entity);
+            return true;
         }
         catch (Exception e)
         {

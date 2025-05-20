@@ -5,6 +5,8 @@ using AutoMapper;
 using CarRental.Models.UserDto;
 using CarRentalDB.Repositories.Interfaces;
 using CarRentalModels.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
@@ -78,14 +80,25 @@ public class UserController : ControllerBase
     /// <param name="userDto">the user info</param>
     /// <returns></returns>
     [HttpPost]
-    public async Task PostUser(UserCreationDto userDto)
+    public async Task<ActionResult> PostUser(UserCreationDto userDto)
     {
         var user = _mapper.Map<User>(userDto);
-        await _userRepository.AddAsync(user);
+        var isValid = await _userRepository.AddAsync(user);
+        if (!isValid)
+        {
+            return BadRequest();
+        }
         await _userRepository.SaveChangesAsync();
+        return Ok();
 
     }
 
+    /// <summary>
+    /// Login controller
+    /// </summary>
+    /// <param name="email"> the email for the user that want to login</param>
+    /// <param name="password"> the password for the user that want to login</param>
+    /// <returns></returns>
     [HttpPost("Login")]
     public async Task<ActionResult<string>> Login(string email, string password)
     {
@@ -108,7 +121,7 @@ public class UserController : ControllerBase
             new Claim(ClaimTypes.Name, user.FirstName),
             new Claim("UserId", user.UserId.ToString()),
             new Claim("Email", user.Email),
-            new Claim("Rule", user.Rule.ToString()),
+            new Claim("Role", user.Role.ToString()),
 
         };
 
@@ -122,5 +135,32 @@ public class UserController : ControllerBase
 
         var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
         return Ok(tokenString);
+    }
+
+    /// <summary>
+    /// Use it to update the user role 
+    /// </summary>
+    /// <param name="id">the id of the user you want to udpate</param>
+    /// <param name="userRole">the new role</param>
+    /// <returns></returns>
+    [Authorize(Policy = "MustBeAnAdmin")]
+    [HttpPatch("/role/{id}")]
+    public async Task<ActionResult> UpdateRole(int id, JsonPatchDocument<UserUpdateRoleDto> userRole)
+    {
+        var user = await _userRepository.GetByIdAsync(id);
+        if (user == null)
+        {
+            _logger.LogError($"User with id: {id} was not found");
+            return NotFound("User not found");
+        }
+        UserUpdateRoleDto? updateRole = _mapper.Map<UserUpdateRoleDto>(user);
+        userRole.ApplyTo(updateRole);
+        if (!TryValidateModel(updateRole))
+        {
+            return BadRequest();
+        }
+        _mapper.Map(updateRole, user);
+        await _userRepository.SaveChangesAsync();
+        return Ok();
     }
 }

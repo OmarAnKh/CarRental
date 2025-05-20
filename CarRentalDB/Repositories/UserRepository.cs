@@ -54,12 +54,18 @@ public class UserRepository : IUserRepository
             throw;
         }
     }
-    public async Task AddAsync(User entity)
+    public async Task<bool> AddAsync(User entity)
     {
         try
         {
+            var userExists = await _carRentalContext.Users.FirstOrDefaultAsync(u => u.Email == entity.Email);
+            if (userExists != null)
+            {
+                return false;
+            }
             entity.Password = BCrypt.Net.BCrypt.HashPassword(entity.Password);
             await _carRentalContext.Users.AddAsync(entity);
+            return true;
         }
         catch (Exception e)
         {

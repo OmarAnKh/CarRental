@@ -45,11 +45,12 @@ public class CarRepository : ICarRepository
             throw;
         }
     }
-    public async Task AddAsync(Car entity)
+    public async Task<bool> AddAsync(Car entity)
     {
         try
         {
             await _context.Cars.AddAsync(entity);
+            return true;
         }
         catch (Exception e)
         {

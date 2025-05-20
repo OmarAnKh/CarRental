@@ -22,6 +22,6 @@ public class User
     [Required] public string City { get; set; }
     [Required] public string County { get; set; }
     [Required] public string LicenseNumber { get; set; }
-    [Required] public UserRule Rule { get; set; } = UserRule.Customer;
+    [Required] public UserRole Role { get; set; } = UserRole.Customer;
     public List<Rent> Rents { get; set; }
 }
