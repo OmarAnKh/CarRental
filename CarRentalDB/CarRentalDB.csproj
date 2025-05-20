@@ -7,11 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CarRentalModels\CarRentalModels.csproj" />
+        <ProjectReference Include="..\CarRentalModels\CarRentalModels.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Repositories\" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0"/>
     </ItemGroup>
 
 </Project>
