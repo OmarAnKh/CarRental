@@ -1,6 +1,7 @@
 using CarRentalModels.Enums;
 using CarRentalModels.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace CarRentalDB;
 
@@ -9,8 +10,15 @@ public class CarRentalContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Car> Cars { get; set; }
     public DbSet<Rent> Rents { get; set; }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=CarRentalDb");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        DotNetEnv.Env.Load();
 
+        optionsBuilder
+            .UseSqlServer(Environment.GetEnvironmentVariable("SQLSERVERCONNECTIONSTRING"))
+            .EnableSensitiveDataLogging()
+            .LogTo(Console.WriteLine, LogLevel.Information);
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>().HasData(
@@ -97,11 +105,11 @@ public class CarRentalContext : DbContext
         );
 
         modelBuilder.Entity<Car>().HasData(
-            new Car { CarId = 1, PlateNumber = "ABC123", Model = "Toyota Corolla", Color = "Red" },
-            new Car { CarId = 2, PlateNumber = "XYZ789", Model = "Honda Civic", Color = "Blue" },
-            new Car { CarId = 3, PlateNumber = "LMN456", Model = "Ford Mustang", Color = "Black" },
-            new Car { CarId = 4, PlateNumber = "JKL321", Model = "Chevrolet Malibu", Color = "White" },
-            new Car { CarId = 5, PlateNumber = "DEF654", Model = "Nissan Altima", Color = "Silver" }
+            new Car { CarId = 1, PlateNumber = "ABC123", Model = "Toyota Corolla", Color = "Red", Availability = CarAvailability.Available },
+            new Car { CarId = 2, PlateNumber = "XYZ789", Model = "Honda Civic", Color = "Blue", Availability = CarAvailability.Unavailable },
+            new Car { CarId = 3, PlateNumber = "LMN456", Model = "Ford Mustang", Color = "Black", Availability = CarAvailability.Available },
+            new Car { CarId = 4, PlateNumber = "JKL321", Model = "Chevrolet Malibu", Color = "White", Availability = CarAvailability.Available },
+            new Car { CarId = 5, PlateNumber = "DEF654", Model = "Nissan Altima", Color = "Silver", Availability = CarAvailability.Unavailable }
         );
 
         modelBuilder.Entity<Rent>().HasData(

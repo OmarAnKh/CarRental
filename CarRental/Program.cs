@@ -84,7 +84,7 @@ builder.Services.AddAuthorizationBuilder()
     .AddPolicy("MustBeAnAdmin", policy =>
     {
         policy.RequireAuthenticatedUser();
-        policy.RequireClaim("role", "Admin");
+        policy.RequireClaim("Role", "Admin");
     });
 var app = builder.Build();
 

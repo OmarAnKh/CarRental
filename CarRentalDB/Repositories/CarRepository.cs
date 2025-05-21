@@ -49,6 +49,8 @@ public class CarRepository : ICarRepository
     {
         try
         {
+            var isCarExists = await _context.Cars.FirstOrDefaultAsync(c => c.PlateNumber == entity.PlateNumber);
+            if (isCarExists != null) return false;
             await _context.Cars.AddAsync(entity);
             return true;
         }

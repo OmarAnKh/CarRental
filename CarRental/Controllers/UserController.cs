@@ -140,7 +140,7 @@ public class UserController : ControllerBase
     /// <summary>
     /// Use it to update the user role 
     /// </summary>
-    /// <param name="id">the id of the user you want to udpate</param>
+    /// <param name="id">the id of the user you want to update</param>
     /// <param name="userRole">the new role</param>
     /// <returns></returns>
     [Authorize(Policy = "MustBeAnAdmin")]
@@ -162,5 +162,16 @@ public class UserController : ControllerBase
         _mapper.Map(updateRole, user);
         await _userRepository.SaveChangesAsync();
         return Ok();
+    }
+
+    [HttpGet("Rent/{id}")]
+    public async Task<ActionResult<UserWithRentsDto>> GetUserRent(int id)
+    {
+        var user = await _userRepository.GetUserWithRentsAsync(id);
+        if (user == null)
+        {
+            return BadRequest();
+        }
+        return Ok(_mapper.Map<UserWithRentsDto>(user));
     }
 }

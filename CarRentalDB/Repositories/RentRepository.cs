@@ -1,5 +1,6 @@
 using CarRentalDB.Repositories.Interfaces;
 using CarRentalDB.Services;
+using CarRentalModels.Enums;
 using CarRentalModels.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,7 +21,7 @@ public class RentRepository : IRentRepository
         {
             collection = collection.Where(r => r.RentDate.ToString() == searchQuery);
         }
-        var totalItemAmount = await _context.Rents.CountAsync();
+        var totalItemAmount = await collection.CountAsync();
         var paginationMetaData = new PaginationMetaData(totalItemAmount, pageNumber, pageSize);
         var collectionToReturn = await collection
             .Skip(pageSize * (pageNumber - 1))
@@ -44,6 +45,12 @@ public class RentRepository : IRentRepository
     {
         try
         {
+            var carAvailable = await _context.Cars.FirstOrDefaultAsync(c => c.CarId == entity.CarId);
+            if (carAvailable == null || carAvailable?.Availability == CarAvailability.Unavailable)
+            {
+                return false;
+            }
+            await ChangeCarAvailabilityAsync(carAvailable!, CarAvailability.Unavailable);
             await _context.Rents.AddAsync(entity);
             return true;
         }
@@ -71,6 +78,32 @@ public class RentRepository : IRentRepository
     }
     public async Task SaveChangesAsync()
     {
+        await _context.SaveChangesAsync();
+    }
+    public async Task<bool> CancelRent(int rentId, int userId)
+    {
+        var rentToCancel = await _context.Rents.FirstOrDefaultAsync(r => r.RentId == rentId);
+        if (rentToCancel == null)
+        {
+            return false;
+        }
+        if (rentToCancel.UserId != userId)
+        {
+            return false;
+        }
+        var carAvailable = await _context.Cars.FirstOrDefaultAsync(c => c.CarId == rentToCancel.CarId);
+        if (carAvailable == null)
+        {
+            return false;
+        }
+        await ChangeCarAvailabilityAsync(carAvailable!, CarAvailability.Available);
+        return true;
+    }
+
+    private async Task ChangeCarAvailabilityAsync(Car car, CarAvailability availability)
+    {
+        car.Availability = availability;
+        _context.Cars.Update(car);
         await _context.SaveChangesAsync();
     }
 }
