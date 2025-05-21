@@ -1,3 +1,5 @@
+using CarRental.Services;
+using CarRental.Services.Interfaces;
 using CarRentalDB;
 using CarRentalDB.Repositories;
 using CarRentalDB.Repositories.Interfaces;
@@ -21,6 +23,7 @@ builder.Services.AddDbContext<CarRentalContext>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICarRepository, CarRepository>();
 builder.Services.AddScoped<IRentRepository, RentRepository>();
+builder.Services.AddTransient<IEmailSender, SystemEmailSender>();
 builder.Services.AddProblemDetails();
 builder.Services.AddAuthentication("Bearer").AddJwtBearer(options =>
 {
