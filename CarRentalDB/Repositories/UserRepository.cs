@@ -102,4 +102,11 @@ public class UserRepository : IUserRepository
         bool passwordMatch = BCrypt.Net.BCrypt.Verify(password, user.Password);
         return passwordMatch ? user : null;
     }
+    public async Task<User?> GetUserWithRentsAsync(int userId)
+    {
+        var user = await _carRentalContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+        if (user == null) return null;
+        user = await _carRentalContext.Users.Include(u => u.Rents).FirstOrDefaultAsync(u => u.UserId == userId);
+        return user;
+    }
 }
